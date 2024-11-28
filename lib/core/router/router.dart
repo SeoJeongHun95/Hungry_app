@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../src/AI/presentation/ai_page.dart';
-import '../../src/Home/presentation/home_page.dart';
+import '../../src/Home/presentation/view/home_page.dart';
 import '../../src/MyProfile/presentation/profile_page.dart';
 import '../../src/MyState/presentation/state_page.dart';
 

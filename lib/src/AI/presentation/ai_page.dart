@@ -1,4 +1,4 @@
-import 'package:baegopa/core/router/bottomNavBar.dart';
+import 'package:baegopa/core/router/bottomnavbar.dart';
 import 'package:flutter/material.dart';
 
 class AiPage extends StatelessWidget {

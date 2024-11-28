@@ -1,6 +1,7 @@
-import 'package:baegopa/core/theme/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+import '../theme/app_color.dart';
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({super.key});
