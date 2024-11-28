@@ -85,8 +85,8 @@ class _BeagopaTimerWidgetState extends ConsumerState<BeagopaTimerWidget> {
           child: CustomPaint(
             painter: ProgressPainter(
               progress: getProgress(
-                startTime: beagopaTimerState["startTime"],
-                endTime: beagopaTimerState["endTime"],
+                startTime: beagopaTimerState.startTime,
+                endTime: beagopaTimerState.endTime,
               ),
               image: _image,
               imageSize: 30.0,
@@ -98,8 +98,8 @@ class _BeagopaTimerWidgetState extends ConsumerState<BeagopaTimerWidget> {
           left: 50,
           child: SizedBox(
             child: Text(
-              beagopaTimerState["isTimerRunning"]
-                  ? "단식중 : ${_formatTime(beagopaTimerState["remainingTime"])}"
+              beagopaTimerState.isTimerRunning
+                  ? "단식중 : ${_formatTime(beagopaTimerState.remainingTime)}"
                   : "배고파!",
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
