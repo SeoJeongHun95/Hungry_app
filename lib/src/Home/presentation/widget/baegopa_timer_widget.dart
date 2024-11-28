@@ -38,23 +38,6 @@ class _BeagopaTimerWidgetState extends ConsumerState<BeagopaTimerWidget> {
     });
   }
 
-  // Future<void> _selectTime(BuildContext context, bool isStartTime) async {
-  //   final initialTime = isStartTime ? _selectedStartTime : _selectedEndTime;
-  //   final TimeOfDay? newTime = await showTimePicker(
-  //     context: context,
-  //     initialTime: initialTime,
-  //   );
-  //   if (newTime != null) {
-  //     setState(() {
-  //       if (isStartTime) {
-  //         _selectedStartTime = newTime;
-  //       } else {
-  //         _selectedEndTime = newTime;
-  //       }
-  //     });
-  //   }
-  // }
-
   double getProgress({required DateTime startTime, required DateTime endTime}) {
     final now = DateTime.now();
     if (now.isAfter(startTime)) {
@@ -78,6 +61,7 @@ class _BeagopaTimerWidgetState extends ConsumerState<BeagopaTimerWidget> {
     final beagopaTimerState = ref.watch(beagopaTimerProvider);
 
     return Stack(
+      alignment: Alignment.center,
       children: [
         SizedBox(
           width: 300,
@@ -95,7 +79,6 @@ class _BeagopaTimerWidgetState extends ConsumerState<BeagopaTimerWidget> {
         ),
         Positioned(
           top: 240,
-          left: 50,
           child: SizedBox(
             child: Text(
               beagopaTimerState.isTimerRunning
@@ -105,14 +88,49 @@ class _BeagopaTimerWidgetState extends ConsumerState<BeagopaTimerWidget> {
             ),
           ),
         ),
-        const Positioned(
+        Positioned(
           top: 160,
-          left: 30,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              GestureDetector(
+                onTap: () async {
+                  final TimeOfDay? newTime = await showTimePicker(
+                    context: context,
+                    initialTime: beagopaTimerState.selectedStartTime,
+                  );
+                  if (newTime != null) {
+                    ref
+                        .read(beagopaTimerProvider.notifier)
+                        .setStartTime(newTime);
+                  }
+                },
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10.0,
+                    horizontal: 20.0,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blue),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Text(
+                    beagopaTimerState.selectedStartTime.format(context),
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                ),
+              ),
+              // 시작시간만 정하면 될거같아서 일단 삭제
               // GestureDetector(
-              //   onTap: () => _selectTime(context, true),
+              //   onTap: () async {
+              //     final TimeOfDay? newTime = await showTimePicker(
+              //       context: context,
+              //       initialTime: beagopaTimerState.selectedEndTime,
+              //     );
+              //     if (newTime != null) {
+              //       ref.read(beagopaTimerProvider.notifier).setEndTime(newTime);
+              //     }
+              //   },
               //   child: Container(
               //     padding: const EdgeInsets.symmetric(
               //       vertical: 10.0,
@@ -123,24 +141,7 @@ class _BeagopaTimerWidgetState extends ConsumerState<BeagopaTimerWidget> {
               //       borderRadius: BorderRadius.circular(10.0),
               //     ),
               //     child: Text(
-              //       _selectedStartTime.format(context),
-              //       style: const TextStyle(fontSize: 18),
-              //     ),
-              //   ),
-              // ),
-              // GestureDetector(
-              //   onTap: () => _selectTime(context, false),
-              //   child: Container(
-              //     padding: const EdgeInsets.symmetric(
-              //       vertical: 10.0,
-              //       horizontal: 20.0,
-              //     ),
-              //     decoration: BoxDecoration(
-              //       border: Border.all(color: Colors.blue),
-              //       borderRadius: BorderRadius.circular(10.0),
-              //     ),
-              //     child: Text(
-              //       _selectedEndTime.format(context),
+              //       beagopaTimerState.selectedEndTime.format(context),
               //       style: const TextStyle(fontSize: 18),
               //     ),
               //   ),
