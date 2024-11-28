@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/enum/fasting_mode.dart';
 import '../provider/beagopa_timer_provider.dart';
 import 'progress_painter_widget.dart';
 
@@ -17,6 +18,7 @@ class BeagopaTimerWidget extends ConsumerStatefulWidget {
 
 class _BeagopaTimerWidgetState extends ConsumerState<BeagopaTimerWidget> {
   final imgPath = "lib/core/img/akachan_nango.png";
+  FastingMode selectedMode = FastingMode.sixteenEight;
 
   ui.Image? _image;
 
@@ -91,7 +93,7 @@ class _BeagopaTimerWidgetState extends ConsumerState<BeagopaTimerWidget> {
         Positioned(
           top: 160,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               GestureDetector(
                 onTap: () async {
@@ -120,33 +122,26 @@ class _BeagopaTimerWidgetState extends ConsumerState<BeagopaTimerWidget> {
                   ),
                 ),
               ),
-              // 시작시간만 정하면 될거같아서 일단 삭제
-              // GestureDetector(
-              //   onTap: () async {
-              //     final TimeOfDay? newTime = await showTimePicker(
-              //       context: context,
-              //       initialTime: beagopaTimerState.selectedEndTime,
-              //     );
-              //     if (newTime != null) {
-              //       ref.read(beagopaTimerProvider.notifier).setEndTime(newTime);
-              //     }
-              //   },
-              //   child: Container(
-              //     padding: const EdgeInsets.symmetric(
-              //       vertical: 10.0,
-              //       horizontal: 20.0,
-              //     ),
-              //     decoration: BoxDecoration(
-              //       border: Border.all(color: Colors.blue),
-              //       borderRadius: BorderRadius.circular(10.0),
-              //     ),
-              //     child: Text(
-              //       beagopaTimerState.selectedEndTime.format(context),
-              //       style: const TextStyle(fontSize: 18),
-              //     ),
-              //   ),
-              // ),
             ],
+          ),
+        ),
+        Positioned(
+          top: 80,
+          child: DropdownButton<FastingMode>(
+            value: selectedMode,
+            onChanged: (FastingMode? newMode) {
+              if (newMode != null) {
+                setState(() {
+                  selectedMode = newMode;
+                });
+              }
+            },
+            items: FastingMode.values.map((FastingMode mode) {
+              return DropdownMenuItem<FastingMode>(
+                value: mode,
+                child: Text(mode.toString().split('.').last), // 열거형 값 문자열만 출력
+              );
+            }).toList(),
           ),
         ),
       ],

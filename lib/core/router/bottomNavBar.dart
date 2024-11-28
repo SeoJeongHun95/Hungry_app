@@ -21,13 +21,13 @@ class BottomNavBar extends StatelessWidget {
             context.go('/home');
             break;
           case 1:
-            context.go('/state');
+            context.go('/statistics');
             break;
           case 2:
             context.go('/ai');
             break;
           case 3:
-            context.go('/profile');
+            context.go('/setting');
             break;
         }
       },
@@ -38,7 +38,7 @@ class BottomNavBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.looks_two),
-          label: '상태',
+          label: '통계',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.looks_3),
@@ -46,7 +46,7 @@ class BottomNavBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.looks_4),
-          label: '프로필',
+          label: '설정',
         ),
       ],
     );
@@ -57,11 +57,11 @@ class BottomNavBar extends StatelessWidget {
     switch (currentPath) {
       case '/home':
         return 0;
-      case '/state':
+      case '/statistics':
         return 1;
       case '/ai':
         return 2;
-      case '/profile':
+      case '/setting':
         return 3;
       default:
         return 0;

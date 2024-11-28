@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../src/AI/presentation/ai_page.dart';
 import '../../src/Home/presentation/view/home_page.dart';
-import '../../src/MyProfile/presentation/profile_page.dart';
-import '../../src/MyState/presentation/state_page.dart';
+import '../../src/Setting/presentation/setting_page.dart';
+import '../../src/Statistics/presentation/statistics_page.dart';
 
 final goRouteProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -20,11 +20,11 @@ final goRouteProvider = Provider<GoRouter>((ref) {
         ),
       ),
       GoRoute(
-        path: '/state',
+        path: '/statistics',
         pageBuilder: (context, state) => buildPageWithDefaultTransition(
           context: context,
           state: state,
-          child: const StatePage(),
+          child: const StatisticsPage(),
         ),
       ),
       GoRoute(
@@ -36,11 +36,11 @@ final goRouteProvider = Provider<GoRouter>((ref) {
         ),
       ),
       GoRoute(
-        path: '/profile',
+        path: '/setting',
         pageBuilder: (context, state) => buildPageWithDefaultTransition(
           context: context,
           state: state,
-          child: const ProfilePage(),
+          child: const SettingPage(),
         ),
       ),
     ],

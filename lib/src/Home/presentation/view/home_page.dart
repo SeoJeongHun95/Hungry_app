@@ -8,9 +8,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: BeagopaTimerWidget()),
-      bottomNavigationBar: BottomNavBar(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("단식"),
+        centerTitle: false,
+      ),
+      body: const Center(child: BeagopaTimerWidget()),
+      bottomNavigationBar: const BottomNavBar(),
     );
   }
 }

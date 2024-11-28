@@ -88,10 +88,4 @@ class BeagopaTimer extends _$BeagopaTimer {
     stopTimer();
     startTimer();
   }
-
-  // void setEndTime(TimeOfDay newTime) {
-  //   state = state.copyWith(selectedEndTime: newTime);
-  //   stopTimer();
-  //   startTimer();
-  // }
 }
