@@ -19,9 +19,9 @@ mixin _$BeagopaTimerState {
   DateTime get startTime => throw _privateConstructorUsedError;
   DateTime get endTime => throw _privateConstructorUsedError;
   Duration get remainingTime => throw _privateConstructorUsedError;
+  Duration get elapsedTime => throw _privateConstructorUsedError;
   bool get isTimerRunning => throw _privateConstructorUsedError;
-  TimeOfDay get selectedStartTime => throw _privateConstructorUsedError;
-  TimeOfDay get selectedEndTime => throw _privateConstructorUsedError;
+  double get progress => throw _privateConstructorUsedError;
   Timer? get timer => throw _privateConstructorUsedError;
 
   /// Create a copy of BeagopaTimerState
@@ -41,9 +41,9 @@ abstract class $BeagopaTimerStateCopyWith<$Res> {
       {DateTime startTime,
       DateTime endTime,
       Duration remainingTime,
+      Duration elapsedTime,
       bool isTimerRunning,
-      TimeOfDay selectedStartTime,
-      TimeOfDay selectedEndTime,
+      double progress,
       Timer? timer});
 }
 
@@ -65,9 +65,9 @@ class _$BeagopaTimerStateCopyWithImpl<$Res, $Val extends BeagopaTimerState>
     Object? startTime = null,
     Object? endTime = null,
     Object? remainingTime = null,
+    Object? elapsedTime = null,
     Object? isTimerRunning = null,
-    Object? selectedStartTime = null,
-    Object? selectedEndTime = null,
+    Object? progress = null,
     Object? timer = freezed,
   }) {
     return _then(_value.copyWith(
@@ -83,18 +83,18 @@ class _$BeagopaTimerStateCopyWithImpl<$Res, $Val extends BeagopaTimerState>
           ? _value.remainingTime
           : remainingTime // ignore: cast_nullable_to_non_nullable
               as Duration,
+      elapsedTime: null == elapsedTime
+          ? _value.elapsedTime
+          : elapsedTime // ignore: cast_nullable_to_non_nullable
+              as Duration,
       isTimerRunning: null == isTimerRunning
           ? _value.isTimerRunning
           : isTimerRunning // ignore: cast_nullable_to_non_nullable
               as bool,
-      selectedStartTime: null == selectedStartTime
-          ? _value.selectedStartTime
-          : selectedStartTime // ignore: cast_nullable_to_non_nullable
-              as TimeOfDay,
-      selectedEndTime: null == selectedEndTime
-          ? _value.selectedEndTime
-          : selectedEndTime // ignore: cast_nullable_to_non_nullable
-              as TimeOfDay,
+      progress: null == progress
+          ? _value.progress
+          : progress // ignore: cast_nullable_to_non_nullable
+              as double,
       timer: freezed == timer
           ? _value.timer
           : timer // ignore: cast_nullable_to_non_nullable
@@ -115,9 +115,9 @@ abstract class _$$BeagopaTimerStateImplCopyWith<$Res>
       {DateTime startTime,
       DateTime endTime,
       Duration remainingTime,
+      Duration elapsedTime,
       bool isTimerRunning,
-      TimeOfDay selectedStartTime,
-      TimeOfDay selectedEndTime,
+      double progress,
       Timer? timer});
 }
 
@@ -137,9 +137,9 @@ class __$$BeagopaTimerStateImplCopyWithImpl<$Res>
     Object? startTime = null,
     Object? endTime = null,
     Object? remainingTime = null,
+    Object? elapsedTime = null,
     Object? isTimerRunning = null,
-    Object? selectedStartTime = null,
-    Object? selectedEndTime = null,
+    Object? progress = null,
     Object? timer = freezed,
   }) {
     return _then(_$BeagopaTimerStateImpl(
@@ -155,18 +155,18 @@ class __$$BeagopaTimerStateImplCopyWithImpl<$Res>
           ? _value.remainingTime
           : remainingTime // ignore: cast_nullable_to_non_nullable
               as Duration,
+      elapsedTime: null == elapsedTime
+          ? _value.elapsedTime
+          : elapsedTime // ignore: cast_nullable_to_non_nullable
+              as Duration,
       isTimerRunning: null == isTimerRunning
           ? _value.isTimerRunning
           : isTimerRunning // ignore: cast_nullable_to_non_nullable
               as bool,
-      selectedStartTime: null == selectedStartTime
-          ? _value.selectedStartTime
-          : selectedStartTime // ignore: cast_nullable_to_non_nullable
-              as TimeOfDay,
-      selectedEndTime: null == selectedEndTime
-          ? _value.selectedEndTime
-          : selectedEndTime // ignore: cast_nullable_to_non_nullable
-              as TimeOfDay,
+      progress: null == progress
+          ? _value.progress
+          : progress // ignore: cast_nullable_to_non_nullable
+              as double,
       timer: freezed == timer
           ? _value.timer
           : timer // ignore: cast_nullable_to_non_nullable
@@ -182,9 +182,9 @@ class _$BeagopaTimerStateImpl implements _BeagopaTimerState {
       {required this.startTime,
       required this.endTime,
       required this.remainingTime,
+      required this.elapsedTime,
       this.isTimerRunning = false,
-      required this.selectedStartTime,
-      required this.selectedEndTime,
+      this.progress = 0,
       this.timer});
 
   @override
@@ -194,18 +194,19 @@ class _$BeagopaTimerStateImpl implements _BeagopaTimerState {
   @override
   final Duration remainingTime;
   @override
+  final Duration elapsedTime;
+  @override
   @JsonKey()
   final bool isTimerRunning;
   @override
-  final TimeOfDay selectedStartTime;
-  @override
-  final TimeOfDay selectedEndTime;
+  @JsonKey()
+  final double progress;
   @override
   final Timer? timer;
 
   @override
   String toString() {
-    return 'BeagopaTimerState(startTime: $startTime, endTime: $endTime, remainingTime: $remainingTime, isTimerRunning: $isTimerRunning, selectedStartTime: $selectedStartTime, selectedEndTime: $selectedEndTime, timer: $timer)';
+    return 'BeagopaTimerState(startTime: $startTime, endTime: $endTime, remainingTime: $remainingTime, elapsedTime: $elapsedTime, isTimerRunning: $isTimerRunning, progress: $progress, timer: $timer)';
   }
 
   @override
@@ -218,18 +219,18 @@ class _$BeagopaTimerStateImpl implements _BeagopaTimerState {
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
             (identical(other.remainingTime, remainingTime) ||
                 other.remainingTime == remainingTime) &&
+            (identical(other.elapsedTime, elapsedTime) ||
+                other.elapsedTime == elapsedTime) &&
             (identical(other.isTimerRunning, isTimerRunning) ||
                 other.isTimerRunning == isTimerRunning) &&
-            (identical(other.selectedStartTime, selectedStartTime) ||
-                other.selectedStartTime == selectedStartTime) &&
-            (identical(other.selectedEndTime, selectedEndTime) ||
-                other.selectedEndTime == selectedEndTime) &&
+            (identical(other.progress, progress) ||
+                other.progress == progress) &&
             (identical(other.timer, timer) || other.timer == timer));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, startTime, endTime,
-      remainingTime, isTimerRunning, selectedStartTime, selectedEndTime, timer);
+      remainingTime, elapsedTime, isTimerRunning, progress, timer);
 
   /// Create a copy of BeagopaTimerState
   /// with the given fields replaced by the non-null parameter values.
@@ -246,9 +247,9 @@ abstract class _BeagopaTimerState implements BeagopaTimerState {
       {required final DateTime startTime,
       required final DateTime endTime,
       required final Duration remainingTime,
+      required final Duration elapsedTime,
       final bool isTimerRunning,
-      required final TimeOfDay selectedStartTime,
-      required final TimeOfDay selectedEndTime,
+      final double progress,
       final Timer? timer}) = _$BeagopaTimerStateImpl;
 
   @override
@@ -258,11 +259,11 @@ abstract class _BeagopaTimerState implements BeagopaTimerState {
   @override
   Duration get remainingTime;
   @override
+  Duration get elapsedTime;
+  @override
   bool get isTimerRunning;
   @override
-  TimeOfDay get selectedStartTime;
-  @override
-  TimeOfDay get selectedEndTime;
+  double get progress;
   @override
   Timer? get timer;
 

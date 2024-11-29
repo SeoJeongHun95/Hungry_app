@@ -11,7 +11,7 @@ class SettingPage extends StatelessWidget {
         title: const Text('설정'),
         centerTitle: false,
       ),
-      body: const Center(child: Text('setting Page')),
+     body: const Center(child: Text('업데이트 중입니다.')),
       bottomNavigationBar: const BottomNavBar(),
     );
   }

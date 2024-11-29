@@ -1,68 +1,59 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
-import 'package:baegopa/core/theme/app_color.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/theme/app_color.dart';
+
 class ProgressPainter extends CustomPainter {
-  final double progress;
+  final double progress; // 진행 상태를 받음
   final ui.Image? image;
   final double imageSize;
+  final double strokeWidth;
 
-  ProgressPainter({required this.progress, this.image, this.imageSize = 20.0});
+  ProgressPainter({
+    required this.progress,
+    this.image,
+    required this.imageSize,
+    required this.strokeWidth,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
-    const strokeWidth = 10.0;
+    // 부모 위젯의 크기를 초과하지 않도록 원의 크기를 조정
+    final radius = math.min(size.width, size.height) / 2 - strokeWidth;
 
     final paint = Paint()
-      ..color = Colors.grey.withOpacity(0.3)
+      ..color = AppColor.KongBlue5
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth;
 
-    final progressPaint = Paint()
+    // 원 그리기
+    canvas.drawCircle(size.center(Offset.zero), radius, paint);
+
+    // 진행 상태 원 그리기
+    final sweepAngle = 2 * math.pi * progress;
+    paint
       ..color = AppColor.KongBlue1
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth
       ..strokeCap = StrokeCap.round;
-
-    // 반원의 높이만큼 영역 제한
-    final clipRect = Rect.fromLTRB(0, 0, size.width, size.height / 2);
-    canvas.clipRect(clipRect); // 클리핑 처리
-
-    // 원호 그리기
-    final rect = Rect.fromLTWH(
-      strokeWidth / 2,
-      strokeWidth / 2,
-      size.width - strokeWidth,
-      size.height - strokeWidth,
-    );
-
     canvas.drawArc(
-      rect,
-      -math.pi,
-      math.pi,
+      Rect.fromCircle(center: size.center(Offset.zero), radius: radius),
+      -math.pi / 2, // 시작 각도 (상단부터 시작)
+      sweepAngle, // 진행된 각도
       false,
       paint,
     );
 
-    // 진행된 부분 그리기
-    canvas.drawArc(
-      rect,
-      -math.pi,
-      math.pi * progress,
-      false,
-      progressPaint,
-    );
-
-    // 파란색 진행 끝에 이미지 추가
+    // 이미지 추가 (진행 상태 끝에 이미지 그리기)
     if (image != null && progress > 0) {
-      final angle = -math.pi + math.pi * progress;
+      final angle = -math.pi / 2 + 2 * math.pi * progress; // 진행 각도
       final center = Offset(size.width / 2, size.height / 2);
-      final radius = (size.width - strokeWidth) / 2;
+      final imageRadius = radius; // 이미지도 원의 경계에 맞추어 배치
 
-      final imageX = center.dx + radius * math.cos(angle) - (imageSize / 2);
-      final imageY = center.dy + radius * math.sin(angle) - (imageSize / 2);
+      final imageX =
+          center.dx + imageRadius * math.cos(angle) - (imageSize / 2);
+      final imageY =
+          center.dy + imageRadius * math.sin(angle) - (imageSize / 2);
 
       final srcRect = Rect.fromLTWH(
           0, 0, image!.width.toDouble(), image!.height.toDouble());
@@ -74,6 +65,6 @@ class ProgressPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+    return true; // 상태 변경 시 계속 그려짐
   }
 }

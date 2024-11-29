@@ -11,9 +11,9 @@ class BeagopaTimerState with _$BeagopaTimerState {
     required DateTime startTime,
     required DateTime endTime,
     required Duration remainingTime,
+    required Duration elapsedTime,
     @Default(false) bool isTimerRunning,
-    required TimeOfDay selectedStartTime,
-    required TimeOfDay selectedEndTime,
+    @Default(0) double progress,
     Timer? timer,
   }) = _BeagopaTimerState;
 }

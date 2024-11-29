@@ -17,7 +17,7 @@ class BeagopaTimerWidget extends ConsumerStatefulWidget {
 }
 
 class _BeagopaTimerWidgetState extends ConsumerState<BeagopaTimerWidget> {
-  final imgPath = "lib/core/img/akachan_nango.png";
+  final imgPath = "lib/core/img/bab.png";
   FastingMode selectedMode = FastingMode.sixteenEight;
 
   ui.Image? _image;
@@ -25,9 +25,7 @@ class _BeagopaTimerWidgetState extends ConsumerState<BeagopaTimerWidget> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(beagopaTimerProvider.notifier).startTimer();
-    });
+
     _loadImage(imgPath);
   }
 
@@ -40,24 +38,6 @@ class _BeagopaTimerWidgetState extends ConsumerState<BeagopaTimerWidget> {
     });
   }
 
-  double getProgress({required DateTime startTime, required DateTime endTime}) {
-    final now = DateTime.now();
-    if (now.isAfter(startTime)) {
-      if (now.isBefore(endTime)) {
-        final elapsedTime = now.difference(startTime).inSeconds;
-        final totalTime = endTime.difference(startTime).inSeconds;
-        return elapsedTime / totalTime;
-      } else {
-        return 1.0;
-      }
-    }
-    return 0.0;
-  }
-
-  String _formatTime(Duration duration) {
-    return "${duration.inHours.toString().padLeft(2, '0')}:${(duration.inMinutes % 60).toString().padLeft(2, '0')}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}";
-  }
-
   @override
   Widget build(BuildContext context) {
     final beagopaTimerState = ref.watch(beagopaTimerProvider);
@@ -65,84 +45,36 @@ class _BeagopaTimerWidgetState extends ConsumerState<BeagopaTimerWidget> {
     return Stack(
       alignment: Alignment.center,
       children: [
+        //프로그레스
         SizedBox(
-          width: 300,
-          height: 300,
+          width: 320,
+          height: 320,
           child: CustomPaint(
             painter: ProgressPainter(
-              progress: getProgress(
-                startTime: beagopaTimerState.startTime,
-                endTime: beagopaTimerState.endTime,
-              ),
+              progress: beagopaTimerState.progress,
               image: _image,
               imageSize: 30.0,
+              strokeWidth: 10,
             ),
           ),
         ),
         Positioned(
-          top: 240,
-          child: SizedBox(
-            child: Text(
-              beagopaTimerState.isTimerRunning
-                  ? "단식중 : ${_formatTime(beagopaTimerState.remainingTime)}"
-                  : "배고파!",
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 160,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () async {
-                  final TimeOfDay? newTime = await showTimePicker(
-                    context: context,
-                    initialTime: beagopaTimerState.selectedStartTime,
-                  );
-                  if (newTime != null) {
-                    ref
-                        .read(beagopaTimerProvider.notifier)
-                        .setStartTime(newTime);
-                  }
-                },
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 20.0,
-                  ),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.blue),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Text(
-                    beagopaTimerState.selectedStartTime.format(context),
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
+          top: 60,
+          child: Column(children: [
+            Text(
+              beagopaTimerState.isTimerRunning ? "지금은 단식 중이에요" : "지금은 충전 중이에요",
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
-            ],
-          ),
-        ),
-        Positioned(
-          top: 80,
-          child: DropdownButton<FastingMode>(
-            value: selectedMode,
-            onChanged: (FastingMode? newMode) {
-              if (newMode != null) {
-                setState(() {
-                  selectedMode = newMode;
-                });
-              }
-            },
-            items: FastingMode.values.map((FastingMode mode) {
-              return DropdownMenuItem<FastingMode>(
-                value: mode,
-                child: Text(mode.toString().split('.').last), // 열거형 값 문자열만 출력
-              );
-            }).toList(),
-          ),
+            ),
+            Image.asset(
+              beagopaTimerState.isTimerRunning
+                  ? "lib/core/img/noeat_baby.png"
+                  : "lib/core/img/eat_baby.png",
+              width: 160,
+            )
+          ]),
         ),
       ],
     );

@@ -1,12 +1,14 @@
 import 'dart:async';
 
-import 'package:baegopa/src/Home/domain/model/beagopa_timer_state.dart';
-import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../../../core/enum/fasting_mode.dart';
+import '../../domain/model/beagopa_timer_state.dart';
+import 'fasting_mode_provider.dart';
 
 part 'beagopa_timer_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class BeagopaTimer extends _$BeagopaTimer {
   @override
   BeagopaTimerState build() {
@@ -14,44 +16,25 @@ class BeagopaTimer extends _$BeagopaTimer {
     return BeagopaTimerState(
       startTime: now,
       endTime: now,
+      elapsedTime: Duration.zero,
       remainingTime: Duration.zero,
       isTimerRunning: false,
-      selectedStartTime: const TimeOfDay(hour: 10, minute: 0),
-      selectedEndTime: const TimeOfDay(hour: 18, minute: 0),
       timer: null,
+      progress: 0.0,
     );
   }
 
+  // 타이머 시작
   void startTimer() {
-    final now = DateTime.now();
-
-    final startTime = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      state.selectedStartTime.hour,
-      state.selectedStartTime.minute,
-    );
-
-    final endTime = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      state.selectedEndTime.hour,
-      state.selectedEndTime.minute,
-    );
-
-    final adjustedEndTime = endTime.isBefore(startTime)
-        ? endTime.add(const Duration(days: 1))
-        : endTime;
+    final fastingMode = ref.watch(fastingModeStateProvider);
+    final endTime = _getEndTime(fastingMode);
 
     state = state.copyWith(
-      startTime: startTime,
-      endTime: adjustedEndTime,
-      remainingTime: startTime.difference(now).isNegative
-          ? Duration.zero
-          : startTime.difference(now),
+      endTime: endTime,
+      remainingTime: _calculateRemainingTime(),
+      elapsedTime: _calculateElapsedTime(),
       isTimerRunning: true,
+      progress: 0.0,
     );
 
     _updateTimerState();
@@ -63,29 +46,89 @@ class BeagopaTimer extends _$BeagopaTimer {
     );
   }
 
+  // 타이머 멈춤
+  void stopTimer() {
+    state.timer?.cancel();
+
+    state = state.copyWith(
+      isTimerRunning: false,
+      timer: null,
+      remainingTime: Duration.zero,
+      progress: 0, // 종료 시점에서 현재 진행 상태를 초기화
+    );
+  }
+
+  // 타이머 상태 업데이트
   void _updateTimerState() {
     final now = DateTime.now();
     if (now.isBefore(state.endTime)) {
+      final progress = getProgress(
+        startTime: state.startTime,
+        endTime: state.endTime,
+      );
       state = state.copyWith(
+        elapsedTime: now.difference(state.startTime),
         remainingTime: state.endTime.difference(now),
+        progress: progress,
       );
     } else {
       stopTimer();
     }
   }
 
-  void stopTimer() {
-    state.timer?.cancel();
-    state = state.copyWith(
-      isTimerRunning: false,
-      timer: null,
-      remainingTime: Duration.zero,
-    );
+  // 남은 시간 계산
+  Duration _calculateRemainingTime() {
+    final now = DateTime.now();
+    return state.startTime.isBefore(now)
+        ? Duration.zero
+        : state.startTime.difference(now);
   }
 
-  void setStartTime(TimeOfDay newTime) {
-    state = state.copyWith(selectedStartTime: newTime);
-    stopTimer();
-    startTimer();
+  // 진행된 시간 계산
+  Duration _calculateElapsedTime() {
+    final now = DateTime.now();
+    return now.isBefore(state.startTime)
+        ? Duration.zero
+        : now.difference(state.startTime);
+  }
+
+  // fastingMode에 따른 endTime 계산
+  DateTime _getEndTime(FastingMode mode) {
+    final duration = getDurationForMode(mode);
+    return state.startTime.add(Duration(hours: duration));
+  }
+
+  // 진행 상태 계산
+  double getProgress({required DateTime startTime, required DateTime endTime}) {
+    final now = DateTime.now();
+    if (now.isAfter(startTime)) {
+      if (now.isBefore(endTime)) {
+        final elapsedTime = now.difference(startTime).inSeconds;
+        final totalTime = endTime.difference(startTime).inSeconds;
+        return elapsedTime / totalTime;
+      } else {
+        return 1.0;
+      }
+    }
+    return 0.0;
+  }
+
+  // fastingMode에 따른 지속 시간 반환
+  int getDurationForMode(FastingMode mode) {
+    switch (mode) {
+      case FastingMode.sixteenEight:
+        return 16;
+      case FastingMode.twentyFour:
+        return 20;
+      case FastingMode.fiveTwo:
+      case FastingMode.eatStopEat:
+      case FastingMode.alternateday:
+        return 24;
+    }
+  }
+
+  // 시작 시간 설정
+  void setStartTime(DateTime newStartTime) {
+    state = state.copyWith(startTime: newStartTime);
   }
 }
