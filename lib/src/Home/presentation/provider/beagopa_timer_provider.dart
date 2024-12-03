@@ -26,6 +26,10 @@ class BeagopaTimer extends _$BeagopaTimer {
 
   // 타이머 시작
   void startTimer() {
+    if (state.startTime.isAfter(DateTime.now())) {
+      return;
+    }
+
     final fastingMode = ref.watch(fastingModeStateProvider);
     final endTime = _getEndTime(fastingMode);
 
@@ -127,8 +131,12 @@ class BeagopaTimer extends _$BeagopaTimer {
     }
   }
 
-  // 시작 시간 설정
+  // 시작 시간 설정 및 초기화
   void setStartTime(DateTime newStartTime) {
-    state = state.copyWith(startTime: newStartTime);
+    state = state.copyWith(
+      startTime: newStartTime,
+      remainingTime: Duration.zero,
+      progress: 0,
+    );
   }
 }

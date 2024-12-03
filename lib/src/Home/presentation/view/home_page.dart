@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../../../core/router/bottomnavbar.dart';
+import '../../../../core/router/bottom_nav_bar.dart';
+import '../../../../core/theme/app_color.dart';
 import '../widget/baegopa_timer_widget.dart';
 import '../widget/dash_board_widget.dart';
 import '../widget/fasting_mode_selector_widget.dart';
@@ -16,8 +18,13 @@ class HomePage extends StatelessWidget {
         centerTitle: false,
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.tips_and_updates_rounded),
+            onPressed: () {
+              context.pushNamed("TipPage");
+            },
+            icon: Icon(
+              Icons.tips_and_updates_rounded,
+              color: AppColor.KongBlue1,
+            ),
           )
         ],
       ),

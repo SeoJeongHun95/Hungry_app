@@ -1,5 +1,6 @@
-import 'package:baegopa/core/router/bottomnavbar.dart';
 import 'package:flutter/material.dart';
+
+import '../../../core/router/bottom_nav_bar.dart';
 
 class StatisticsPage extends StatelessWidget {
   const StatisticsPage({super.key});
@@ -11,7 +12,7 @@ class StatisticsPage extends StatelessWidget {
         title: const Text('통계'),
         centerTitle: false,
       ),
-      body: const Center(child: Text('업데이트 중입니다.')),
+      body: const Center(child: Text('업데이트 예정 입니다.')),
       bottomNavigationBar: const BottomNavBar(),
     );
   }
