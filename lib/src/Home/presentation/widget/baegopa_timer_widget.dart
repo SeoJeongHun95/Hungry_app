@@ -18,7 +18,7 @@ class BeagopaTimerWidget extends ConsumerStatefulWidget {
 
 class _BeagopaTimerWidgetState extends ConsumerState<BeagopaTimerWidget> {
   final imgPath = "lib/core/img/bab.png";
-  FastingMode selectedMode = FastingMode.sixteenEight;
+  FastingMode selectedMode = FastingMode.SIXTEENEIGHT;
 
   ui.Image? _image;
 

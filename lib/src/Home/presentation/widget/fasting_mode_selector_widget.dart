@@ -22,7 +22,8 @@ class FastingModeSelectorWidget extends ConsumerWidget {
         return DropdownMenuItem<FastingMode>(
           value: mode,
           child: Text(
-            mode.toString().split('.').last,
+            mode.str,
+            // mode.toString().split('.').last,
           ), // 열거형 값 문자열만 출력
         );
       }).toList(),

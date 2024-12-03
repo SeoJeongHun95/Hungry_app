@@ -8,7 +8,7 @@ part 'fasting_mode_provider.g.dart';
 class FastingModeState extends _$FastingModeState {
   @override
   FastingMode build() {
-    return FastingMode.sixteenEight;
+    return FastingMode.SIXTEENEIGHT;
   }
 
   void changeMode(FastingMode newMode) {

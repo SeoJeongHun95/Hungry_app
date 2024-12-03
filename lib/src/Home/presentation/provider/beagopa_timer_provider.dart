@@ -120,13 +120,13 @@ class BeagopaTimer extends _$BeagopaTimer {
   // fastingMode에 따른 지속 시간 반환
   int getDurationForMode(FastingMode mode) {
     switch (mode) {
-      case FastingMode.sixteenEight:
+      case FastingMode.TWELVETWELVE:
+        return 12;
+      case FastingMode.SIXTEENEIGHT:
         return 16;
-      case FastingMode.twentyFour:
+      case FastingMode.TWENTYFOUR:
         return 20;
-      case FastingMode.fiveTwo:
-      case FastingMode.eatStopEat:
-      case FastingMode.alternateday:
+      case FastingMode.FIVETWO:
         return 24;
     }
   }
