@@ -8,7 +8,7 @@ part of 'fasting_record.dart';
 
 class FastingRecordAdapter extends TypeAdapter<FastingRecord> {
   @override
-  final int typeId = 1;
+  final int typeId = 0;
 
   @override
   FastingRecord read(BinaryReader reader) {
@@ -18,7 +18,7 @@ class FastingRecordAdapter extends TypeAdapter<FastingRecord> {
     };
     return FastingRecord(
       date: fields[0] as DateTime,
-      fastingDuration: fields[1] as Duration,
+      fastingDuration: fields[1] as int,
     );
   }
 
@@ -42,20 +42,3 @@ class FastingRecordAdapter extends TypeAdapter<FastingRecord> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-_$FastingRecordImpl _$$FastingRecordImplFromJson(Map<String, dynamic> json) =>
-    _$FastingRecordImpl(
-      date: DateTime.parse(json['date'] as String),
-      fastingDuration:
-          Duration(microseconds: (json['fastingDuration'] as num).toInt()),
-    );
-
-Map<String, dynamic> _$$FastingRecordImplToJson(_$FastingRecordImpl instance) =>
-    <String, dynamic>{
-      'date': instance.date.toIso8601String(),
-      'fastingDuration': instance.fastingDuration.inMicroseconds,
-    };

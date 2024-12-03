@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/enum/fasting_mode.dart';
+import '../../data/model/fasting_record.dart';
 import '../../domain/model/beagopa_timer_state.dart';
 import 'fasting_mode_provider.dart';
 
@@ -51,14 +53,28 @@ class BeagopaTimer extends _$BeagopaTimer {
   }
 
   // 타이머 멈춤
-  void stopTimer() {
+  void stopTimer() async {
     state.timer?.cancel();
 
+    // 단식 시간 계산
+    final fastingDuration = state.elapsedTime;
+
+    // 날짜별로 저장할 기록 생성
+    final record = FastingRecord(
+      date: DateTime.now(),
+      fastingDuration: fastingDuration.inSeconds,
+    );
+
+    // Hive에 기록 저장
+    final box = await Hive.openBox<FastingRecord>('fastingRecordsBox');
+    await box.add(record); // 날짜별 기록 추가
+
+    // 타이머 상태 초기화
     state = state.copyWith(
       isTimerRunning: false,
       timer: null,
       remainingTime: Duration.zero,
-      progress: 0, // 종료 시점에서 현재 진행 상태를 초기화
+      progress: 0,
     );
   }
 

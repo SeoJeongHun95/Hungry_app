@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'fasting_mode_provider.dart';
+part of 'fasting_record_data_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$fastingModeStateHash() => r'6f22daf696386817f7b10cad9bcc0cbb16254dee';
+String _$fastingRecordDataHash() => r'19dbf5c92ed0a5fe3c6c47e868cff5819ec3656e';
 
-/// See also [FastingModeState].
-@ProviderFor(FastingModeState)
-final fastingModeStateProvider =
-    AutoDisposeNotifierProvider<FastingModeState, FastingMode>.internal(
-  FastingModeState.new,
-  name: r'fastingModeStateProvider',
+/// See also [FastingRecordData].
+@ProviderFor(FastingRecordData)
+final fastingRecordDataProvider = AutoDisposeAsyncNotifierProvider<
+    FastingRecordData, List<FastingRecord>>.internal(
+  FastingRecordData.new,
+  name: r'fastingRecordDataProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$fastingModeStateHash,
+      : _$fastingRecordDataHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$FastingModeState = AutoDisposeNotifier<FastingMode>;
+typedef _$FastingRecordData = AutoDisposeAsyncNotifier<List<FastingRecord>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

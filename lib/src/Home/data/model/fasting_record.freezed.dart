@@ -14,19 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-FastingRecord _$FastingRecordFromJson(Map<String, dynamic> json) {
-  return _FastingRecord.fromJson(json);
-}
-
 /// @nodoc
 mixin _$FastingRecord {
   @HiveField(0)
   DateTime get date => throw _privateConstructorUsedError;
   @HiveField(1)
-  Duration get fastingDuration => throw _privateConstructorUsedError;
-
-  /// Serializes this FastingRecord to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  int get fastingDuration => throw _privateConstructorUsedError;
 
   /// Create a copy of FastingRecord
   /// with the given fields replaced by the non-null parameter values.
@@ -41,8 +34,7 @@ abstract class $FastingRecordCopyWith<$Res> {
           FastingRecord value, $Res Function(FastingRecord) then) =
       _$FastingRecordCopyWithImpl<$Res, FastingRecord>;
   @useResult
-  $Res call(
-      {@HiveField(0) DateTime date, @HiveField(1) Duration fastingDuration});
+  $Res call({@HiveField(0) DateTime date, @HiveField(1) int fastingDuration});
 }
 
 /// @nodoc
@@ -71,7 +63,7 @@ class _$FastingRecordCopyWithImpl<$Res, $Val extends FastingRecord>
       fastingDuration: null == fastingDuration
           ? _value.fastingDuration
           : fastingDuration // ignore: cast_nullable_to_non_nullable
-              as Duration,
+              as int,
     ) as $Val);
   }
 }
@@ -84,8 +76,7 @@ abstract class _$$FastingRecordImplCopyWith<$Res>
       __$$FastingRecordImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@HiveField(0) DateTime date, @HiveField(1) Duration fastingDuration});
+  $Res call({@HiveField(0) DateTime date, @HiveField(1) int fastingDuration});
 }
 
 /// @nodoc
@@ -112,27 +103,24 @@ class __$$FastingRecordImplCopyWithImpl<$Res>
       fastingDuration: null == fastingDuration
           ? _value.fastingDuration
           : fastingDuration // ignore: cast_nullable_to_non_nullable
-              as Duration,
+              as int,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$FastingRecordImpl implements _FastingRecord {
   _$FastingRecordImpl(
       {@HiveField(0) required this.date,
       @HiveField(1) required this.fastingDuration});
-
-  factory _$FastingRecordImpl.fromJson(Map<String, dynamic> json) =>
-      _$$FastingRecordImplFromJson(json);
 
   @override
   @HiveField(0)
   final DateTime date;
   @override
   @HiveField(1)
-  final Duration fastingDuration;
+  final int fastingDuration;
 
   @override
   String toString() {
@@ -149,7 +137,6 @@ class _$FastingRecordImpl implements _FastingRecord {
                 other.fastingDuration == fastingDuration));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, date, fastingDuration);
 
@@ -160,30 +147,19 @@ class _$FastingRecordImpl implements _FastingRecord {
   @pragma('vm:prefer-inline')
   _$$FastingRecordImplCopyWith<_$FastingRecordImpl> get copyWith =>
       __$$FastingRecordImplCopyWithImpl<_$FastingRecordImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$FastingRecordImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _FastingRecord implements FastingRecord {
   factory _FastingRecord(
-          {@HiveField(0) required final DateTime date,
-          @HiveField(1) required final Duration fastingDuration}) =
-      _$FastingRecordImpl;
-
-  factory _FastingRecord.fromJson(Map<String, dynamic> json) =
-      _$FastingRecordImpl.fromJson;
+      {@HiveField(0) required final DateTime date,
+      @HiveField(1) required final int fastingDuration}) = _$FastingRecordImpl;
 
   @override
   @HiveField(0)
   DateTime get date;
   @override
   @HiveField(1)
-  Duration get fastingDuration;
+  int get fastingDuration;
 
   /// Create a copy of FastingRecord
   /// with the given fields replaced by the non-null parameter values.

@@ -6,7 +6,7 @@ import '../../src/AI/presentation/ai_page.dart';
 import '../../src/Home/presentation/view/home_page.dart';
 import '../../src/Home/presentation/view/tip_page.dart';
 import '../../src/MySetting/presentation/setting_page.dart';
-import '../../src/Statistics/presentation/statistics_page.dart';
+import '../../src/Statistics/presentation/view/statistics_page.dart';
 
 final goRouteProvider = Provider<GoRouter>((ref) {
   return GoRouter(

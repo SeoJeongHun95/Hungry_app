@@ -170,76 +170,74 @@ class AfterFastingWidget extends ConsumerWidget {
           ],
         ),
         TextButton(
-          onPressed: () {
-            ref.read(beagopaTimerProvider.notifier).stopTimer();
-          },
-          child: TextButton(
-            onPressed: () async {
-              final result = showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (context) => AlertDialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  title: const Text(
-                    '오늘의 단식 데이터를 저장하시겠습니까?',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  actions: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Container(
-                              height: 40,
-                              width: 72,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(8)),
-                                border: Border.all(
-                                  color: Colors.amber,
-                                  width: 2,
-                                ),
-                              ),
-                              child: const Center(child: Text("취소")),
-                            ),
-                          ),
-                        ),
-                        const Gap(8),
-                        Expanded(
-                          child: InkWell(
-                            onTap: () {},
-                            child: Container(
-                              height: 40,
-                              width: 72,
-                              decoration: const BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8)),
-                                color: Colors.amber,
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  "확인",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+          onPressed: () async {
+            showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (context) => AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
-              );
-            },
-            child: Text(
-              "단식종료",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
+                title: const Text(
+                  '오늘의 단식 데이터를 저장하시겠습니까?',
+                  style: TextStyle(fontSize: 16),
+                ),
+                actions: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Container(
+                            height: 40,
+                            width: 72,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(8)),
+                              border: Border.all(
+                                color: Colors.amber,
+                                width: 2,
+                              ),
+                            ),
+                            child: const Center(child: Text("취소")),
+                          ),
+                        ),
+                      ),
+                      const Gap(8),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            ref.read(beagopaTimerProvider.notifier).stopTimer();
+                            Navigator.of(context).pop();
+                          },
+                          child: Container(
+                            height: 40,
+                            width: 72,
+                            decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                              color: Colors.amber,
+                            ),
+                            child: const Center(
+                              child: Text(
+                                "확인",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+          child: Text(
+            "단식종료",
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         ),
         Column(
