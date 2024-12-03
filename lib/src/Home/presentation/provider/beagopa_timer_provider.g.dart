@@ -6,7 +6,7 @@ part of 'beagopa_timer_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$beagopaTimerHash() => r'b894c6803367c7928ab8204b0e4899615aa8f70b';
+String _$beagopaTimerHash() => r'4c93c9b832d26c12e325d3e9abc3c8984db192e3';
 
 /// See also [BeagopaTimer].
 @ProviderFor(BeagopaTimer)
