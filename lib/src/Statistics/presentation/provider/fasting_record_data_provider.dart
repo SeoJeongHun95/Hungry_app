@@ -10,7 +10,6 @@ class FastingRecordData extends _$FastingRecordData {
   @override
   Future<List<FastingRecord>> build() async {
     final records = await getFastingRecords();
-
     return records;
   }
 }
