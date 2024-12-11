@@ -59,15 +59,15 @@ class BeagopaTimer extends _$BeagopaTimer {
     // 단식 시간 계산
     final fastingDuration = state.elapsedTime;
 
-    // 날짜별로 저장할 기록 생성
     final record = FastingRecord(
       date: DateTime.now(),
       fastingDuration: fastingDuration.inSeconds,
     );
 
-    // Hive에 기록 저장
+    // 날짜를 key로 저장
     final box = await Hive.openBox<FastingRecord>('fastingRecordsBox');
-    await box.add(record); // 날짜별 기록 추가
+    final dateKey = record.date.toIso8601String(); // ISO 8601 형식
+    await box.put(dateKey, record);
 
     // 타이머 상태 초기화
     state = state.copyWith(

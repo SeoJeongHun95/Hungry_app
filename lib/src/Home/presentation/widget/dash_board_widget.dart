@@ -179,7 +179,7 @@ class AfterFastingWidget extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 title: const Text(
-                  '오늘의 단식 데이터를 저장하시겠습니까?',
+                  "오늘의 단식을 종료하겠습니까?",
                   style: TextStyle(fontSize: 16),
                 ),
                 actions: [
